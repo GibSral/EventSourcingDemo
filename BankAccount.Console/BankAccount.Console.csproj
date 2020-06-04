@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="structuremap" Version="4.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BankAccount.CoreDomain\BankAccount.CoreDomain.csproj" />
+    <ProjectReference Include="..\BankAccount.EventStore\BankAccount.EventStore.csproj" />
+  </ItemGroup>
+
+</Project>

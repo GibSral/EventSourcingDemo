@@ -12,9 +12,9 @@ namespace BankAccount.CoreDomain.DomainValues
 
         public static Currency Of(string currency) => new Currency(currency);
 
-        public static Currency Euro => new Currency("€");
+        public static Currency Euro => new Currency("Euro");
 
-        public static Currency Dollar => new Currency("$");
+        public static Currency Dollar => new Currency("Dollar");
 
         public bool Equals(Currency? other) => base.Equals(other);
 

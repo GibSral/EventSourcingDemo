@@ -9,9 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashMachine", "CashMachine\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccount.Management", "BankAccountManagement\BankAccount.Management.csproj", "{0860E795-A4C5-4452-871F-36A76E083BEF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankAccount.EventSourcing", "BankAccount.EventSourcing\BankAccount.EventSourcing.csproj", "{1663DA00-0AD0-429E-9EE2-2A81697D7645}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccount.CoreDomain.UnitTests", "BankAccount.CoreDomain.UnitTests\BankAccount.CoreDomain.UnitTests.csproj", "{BF8D9AC8-9791-4C6D-86E3-010A6845C7FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankAccount.EventStore", "BankAccount.EventStore\BankAccount.EventStore.csproj", "{99D6084B-0224-4913-B693-2E36A39C1F39}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankAccount.Console", "BankAccount.Console\BankAccount.Console.csproj", "{BAB2DE9A-A4A8-4E3B-8A25-1065DB5EB889}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccount.AllAccountsProjection", "BankAccount.AllAccountsProjection\BankAccount.AllAccountsProjection.csproj", "{320088C8-E866-4AA7-8E7C-34644C21C833}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +35,22 @@ Global
 		{0860E795-A4C5-4452-871F-36A76E083BEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0860E795-A4C5-4452-871F-36A76E083BEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0860E795-A4C5-4452-871F-36A76E083BEF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1663DA00-0AD0-429E-9EE2-2A81697D7645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1663DA00-0AD0-429E-9EE2-2A81697D7645}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1663DA00-0AD0-429E-9EE2-2A81697D7645}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1663DA00-0AD0-429E-9EE2-2A81697D7645}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF8D9AC8-9791-4C6D-86E3-010A6845C7FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF8D9AC8-9791-4C6D-86E3-010A6845C7FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF8D9AC8-9791-4C6D-86E3-010A6845C7FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF8D9AC8-9791-4C6D-86E3-010A6845C7FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99D6084B-0224-4913-B693-2E36A39C1F39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99D6084B-0224-4913-B693-2E36A39C1F39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99D6084B-0224-4913-B693-2E36A39C1F39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99D6084B-0224-4913-B693-2E36A39C1F39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAB2DE9A-A4A8-4E3B-8A25-1065DB5EB889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAB2DE9A-A4A8-4E3B-8A25-1065DB5EB889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAB2DE9A-A4A8-4E3B-8A25-1065DB5EB889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAB2DE9A-A4A8-4E3B-8A25-1065DB5EB889}.Release|Any CPU.Build.0 = Release|Any CPU
+		{320088C8-E866-4AA7-8E7C-34644C21C833}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{320088C8-E866-4AA7-8E7C-34644C21C833}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{320088C8-E866-4AA7-8E7C-34644C21C833}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{320088C8-E866-4AA7-8E7C-34644C21C833}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

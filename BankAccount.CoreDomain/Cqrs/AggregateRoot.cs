@@ -11,7 +11,7 @@ namespace BankAccount.CoreDomain.Cqrs
         private readonly Dictionary<Type, ApplyInvocation> applyInvocations = new Dictionary<Type, ApplyInvocation>();
         private readonly OId<TAggregate, Guid> id;
         private readonly List<TEvent> uncommittedEvents = new List<TEvent>();
-        private int initialVersion;
+        private int initialVersion = -1;
         private int version;
 
         protected AggregateRoot(OId<TAggregate, Guid> id)

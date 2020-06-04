@@ -107,9 +107,9 @@
       <Project>{5cd6a018-213e-4fd4-af68-a634b09e2cff}</Project>
       <Name>BankAccount.CoreDomain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BankAccount.EventSourcing\BankAccount.EventSourcing.csproj">
-      <Project>{1663da00-0ad0-429e-9ee2-2a81697d7645}</Project>
-      <Name>BankAccount.EventSourcing</Name>
+    <ProjectReference Include="..\BankAccount.EventStore\BankAccount.EventStore.csproj">
+      <Project>{99d6084b-0224-4913-b693-2e36a39c1f39}</Project>
+      <Name>BankAccount.EventStore</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

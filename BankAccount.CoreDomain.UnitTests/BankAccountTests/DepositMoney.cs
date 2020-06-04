@@ -38,7 +38,7 @@ namespace BankAccount.CoreDomain.UnitTests.BankAccountTests
             bankAccountRepository.Received()
                 .SaveAsync(Arg.Is<BankAccount>(it => it.IsCorrectBankAccount(aggregate =>
                     aggregate.Version == 2 &&
-                    aggregate.InitialVersion == 1 &&
+                    aggregate.InitialVersion == 0 &&
                     aggregate.GetUncommittedEvents().SequenceEqual(expectedEvents))));
         }
 
