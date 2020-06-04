@@ -1,7 +1,6 @@
 ﻿using System;
 using BankAccount.CoreDomain.DomainValues;
-using BankAccount.CoreDomain.Entities;
-using BankAccount.CoreDomain.Events;
+using NSubstitute;
 
 namespace BankAccount.CoreDomain.UnitTests
 {
@@ -11,14 +10,14 @@ namespace BankAccount.CoreDomain.UnitTests
 
         public static BankAccount RehydrateWithCreatedEvent(OId<BankAccount, Guid> accountId) => RehydrateWithCreatedEvent(accountId, Currency.Euro);
 
-        public static BankAccount RehydrateWithCreatedEvent(OId<BankAccount, Guid> accountId, Currency currency)
+        public static BankAccount RehydrateWithCreatedEvent(OId<BankAccount, Guid> accountId, Currency currency) =>
+            new BankAccountBuilder(accountId).WithCurrency(currency).Build();
+
+        public static IBankAccountRepository ConfigureBankAccountRepositoryForAccount(BankAccount bankAccount)
         {
-            var employeeId = OId.Of<Employee, Guid>(Guid.Parse("309dc64d-bde5-4ee5-9e21-33a517e2fe35"));
-            var accountHolderId = OId.Of<AccountHolder, Guid>(Guid.Parse("59ed2782-881b-49a9-8230-d0b3bb1c9072"));
-            var iban = Iban.Of("DE37200505501340426749");
-            var bankAccountCreated = new BankAccountCreated(accountId.Value, accountHolderId.Value, iban.Value, currency.Value, employeeId.Value, 1);
-            var creationEvents = new BankAccountEvent[] { bankAccountCreated };
-            return BankAccount.Rehydrate(accountId, creationEvents);
+            var bankAccountRepository = Substitute.For<IBankAccountRepository>();
+            bankAccountRepository.GetByIdAsync(bankAccount.AggregateId).Returns(bankAccount);
+            return bankAccountRepository;
         }
     }
 }

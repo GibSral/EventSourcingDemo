@@ -18,6 +18,7 @@ namespace BankAccount.CoreDomain
     {
         private Iban? iban;
         private Currency? currency;
+        private decimal balance;
 
         private BankAccount(OId<BankAccount, Guid> id)
             : base(id)
@@ -66,6 +67,22 @@ namespace BankAccount.CoreDomain
             RaiseEvent(new MoneyDeposited(AggregateId.Value, transaction.Value, amount.Amount, timeStamp.Value));
         }
 
+        public void WithdrawMoney(Money amount, Transaction transaction, TimeStamp timeStamp)
+        {
+            RequiresCreatedAccount();
+            RequiresCorrectCurrency(amount);
+            RequiresEnoughMoney(amount);
+            RaiseEvent(new MoneyWithdrawn(AggregateId.Value, transaction.Value, amount.Amount, timeStamp.Value));
+        }
+
+        private void RequiresEnoughMoney(Money amount)
+        {
+            if (amount.Amount > balance)
+            {
+                throw new LimitExceededException();
+            }
+        }
+
         void IApply<BankAccountCreated>.Apply(BankAccountCreated @event)
         {
             iban = Iban.Of(@event.Iban);
@@ -79,11 +96,12 @@ namespace BankAccount.CoreDomain
 
         void IApply<MoneyDeposited>.Apply(MoneyDeposited @event)
         {
+            balance += @event.Amount;
         }
 
         void IApply<MoneyWithdrawn>.Apply(MoneyWithdrawn @event)
         {
-            throw new NotImplementedException();
+            balance -= @event.Amount;
         }
 
         void IApply<DispoGranted>.Apply(DispoGranted @event)

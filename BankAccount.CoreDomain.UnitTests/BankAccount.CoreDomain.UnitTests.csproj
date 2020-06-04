@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BankAccountBuilder.cs" />
     <Compile Include="BankAccountExtensions.cs" />
     <Compile Include="BankAccountTestAdapter.cs" />
     <Compile Include="BankAccountTests\CreateNewBankAccount.cs" />

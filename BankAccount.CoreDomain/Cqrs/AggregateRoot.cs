@@ -20,7 +20,7 @@ namespace BankAccount.CoreDomain.Cqrs
             AggregateId = id;
         }
 
-        protected OId<TAggregate, Guid> AggregateId { get; }
+        public OId<TAggregate, Guid> AggregateId { get; }
 
         OId<TAggregate, Guid> IAggregateRoot<TAggregate, TEvent>.Id => id;
 
