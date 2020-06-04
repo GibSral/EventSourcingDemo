@@ -2,10 +2,10 @@
 
 namespace BankAccount.CoreDomain.Events
 {
-    public sealed class MoneyDeposited : BankAccountEvent, IEquatable<MoneyDeposited>
+    public sealed class MoneyDeposited : MoneyTransferEvent, IEquatable<MoneyDeposited>
     {
-        public MoneyDeposited(Guid bankAccountId, long unixTimestamp, decimal amount)
-            : base(bankAccountId, unixTimestamp)
+        public MoneyDeposited(Guid bankAccountId, Guid transactionId, decimal amount, long unixTimestamp)
+            : base(bankAccountId, transactionId, unixTimestamp)
         {
             Amount = amount;
         }

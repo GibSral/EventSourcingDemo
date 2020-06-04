@@ -4,10 +4,13 @@ namespace BankAccount.CoreDomain.DomainValues
 {
     public class Currency : DomainValue<string>, IEquatable<Currency>
     {
-        public Currency(string value)
+        private Currency(string value)
             : base(value)
         {
+            Contracts.RequireParameter(value, () => nameof(value));
         }
+
+        public static Currency Of(string currency) => new Currency(currency);
 
         public static Currency Euro => new Currency("€");
 

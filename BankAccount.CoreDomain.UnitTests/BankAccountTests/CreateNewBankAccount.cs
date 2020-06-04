@@ -29,7 +29,7 @@ namespace BankAccount.CoreDomain.UnitTests.BankAccountTests
             var accountHolderId = OId.Of<AccountHolder, Guid>(Guid.Parse("59ed2782-881b-49a9-8230-d0b3bb1c9072"));
             var iban = Iban.Of("DE37200505501340426749");
             const int unixTimestamp = 1;
-            var command = new CreateBankAccount(accountHolderId, employeeId, Currency.Euro, iban, new TimeStamp(unixTimestamp));
+            var command = new CreateBankAccount(accountHolderId, employeeId, Currency.Euro, iban, TimeStamp.Of(unixTimestamp));
             var expectedAccountId = Guid.Parse("5fd9c8fe-2a2c-4d76-9c57-2460dd516dbf");
             UniqueId.OverrideNewGuid(expectedAccountId);
 
@@ -37,7 +37,7 @@ namespace BankAccount.CoreDomain.UnitTests.BankAccountTests
 
             var expectedEvents = new BankAccountEvent[] { new BankAccountCreated(expectedAccountId, accountHolderId.Value, iban.Value, Currency.Euro.Value, employeeId.Value, unixTimestamp) };
             bankAccountRepository.Received()
-                .SaveAsync(Arg.Is<CoreDomain.BankAccount>(it => it.IsCorrectBankAccount(aggregate =>
+                .SaveAsync(Arg.Is<BankAccount>(it => it.IsCorrectBankAccount(aggregate =>
                     aggregate.Id.Value.Equals(expectedAccountId) &&
                     aggregate.Version == 1 &&
                     aggregate.GetUncommittedEvents().SequenceEqual(expectedEvents))));

@@ -47,7 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BankAccountExtensions.cs" />
+    <Compile Include="BankAccountTestAdapter.cs" />
     <Compile Include="BankAccountTests\CreateNewBankAccount.cs" />
+    <Compile Include="BankAccountTests\DepositMoney.cs" />
+    <Compile Include="BankAccountTests\WithdrawMoney.cs" />
     <Compile Include="DomainValues\IbanTests\Of.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

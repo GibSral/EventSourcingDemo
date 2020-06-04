@@ -36,7 +36,7 @@ namespace BankAccount.CoreDomain
             {
                 return transformation(value);
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
                 throw new ConstraintViolationException(errorMessage(), ex);
             }

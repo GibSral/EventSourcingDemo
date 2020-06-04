@@ -4,10 +4,12 @@ namespace BankAccount.CoreDomain.DomainValues
 {
     public sealed class TimeStamp : DomainValue<long>, IEquatable<TimeStamp>
     {
-        public TimeStamp(long value)
+        private TimeStamp(long value)
             : base(value)
         {
         }
+
+        public static TimeStamp Of(long unixTimestamp) => new TimeStamp(unixTimestamp);
 
         public bool Equals(TimeStamp? other) => base.Equals(other);
 

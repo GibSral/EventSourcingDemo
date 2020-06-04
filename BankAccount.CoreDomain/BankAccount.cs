@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using BankAccount.CoreDomain.Cqrs;
 using BankAccount.CoreDomain.DomainValues;
 using BankAccount.CoreDomain.Entities;
 using BankAccount.CoreDomain.Events;
+using BankAccount.CoreDomain.Exceptions;
 
 namespace BankAccount.CoreDomain
 {
@@ -17,13 +17,20 @@ namespace BankAccount.CoreDomain
         IApply<GutschriftErhalten>
     {
         private Iban? iban;
+        private Currency? currency;
 
         private BankAccount(OId<BankAccount, Guid> id)
             : base(id)
         {
         }
 
-        public static BankAccount New(OId<BankAccount, Guid> id, OId<AccountHolder, Guid> accountHolderId, Iban iban, Currency accountCurrency, OId<Employee, Guid> employeeId, TimeStamp timeStamp)
+        public static BankAccount New(
+            OId<BankAccount, Guid> id,
+            OId<AccountHolder, Guid> accountHolderId,
+            Iban iban,
+            Currency accountCurrency,
+            OId<Employee, Guid> employeeId,
+            TimeStamp timeStamp)
         {
             var bankAccount = new BankAccount(id);
             bankAccount.Create(accountHolderId, iban, accountCurrency, employeeId, timeStamp);
@@ -32,7 +39,9 @@ namespace BankAccount.CoreDomain
 
         public static BankAccount Rehydrate(OId<BankAccount, Guid> id, IEnumerable<BankAccountEvent> events)
         {
-            throw new NotImplementedException();
+            var bankAccount = new BankAccount(id);
+            bankAccount.Replay(events);
+            return bankAccount;
         }
 
         private void Create(
@@ -42,12 +51,25 @@ namespace BankAccount.CoreDomain
             OId<Employee, Guid> employeeId,
             TimeStamp timeStamp)
         {
-            RaiseEvent(new BankAccountCreated(AggregateId.Value, accountHolderId.Value, accountIban.Value, accountCurrency.Value, employeeId.Value, timeStamp.Value));
+            RaiseEvent(new BankAccountCreated(AggregateId.Value,
+                accountHolderId.Value,
+                accountIban.Value,
+                accountCurrency.Value,
+                employeeId.Value,
+                timeStamp.Value));
+        }
+
+        public void DepositMoney(Money amount, Transaction transaction, TimeStamp timeStamp)
+        {
+            RequiresCreatedAccount();
+            RequiresCorrectCurrency(amount);
+            RaiseEvent(new MoneyDeposited(AggregateId.Value, transaction.Value, amount.Amount, timeStamp.Value));
         }
 
         void IApply<BankAccountCreated>.Apply(BankAccountCreated @event)
         {
             iban = Iban.Of(@event.Iban);
+            currency = Currency.Of(@event.Currency);
         }
 
         void IApply<BankAccountClosed>.Apply(BankAccountClosed @event)
@@ -57,7 +79,6 @@ namespace BankAccount.CoreDomain
 
         void IApply<MoneyDeposited>.Apply(MoneyDeposited @event)
         {
-            throw new NotImplementedException();
         }
 
         void IApply<MoneyWithdrawn>.Apply(MoneyWithdrawn @event)
@@ -73,6 +94,16 @@ namespace BankAccount.CoreDomain
         void IApply<GutschriftErhalten>.Apply(GutschriftErhalten @event)
         {
             throw new NotImplementedException();
+        }
+
+        private void RequiresCreatedAccount() => Contracts.Require(iban, () => "Account not created");
+
+        private void RequiresCorrectCurrency(Money money)
+        {
+            if (!currency!.Equals(money.Currency))
+            {
+                throw new CurrencyMismatchException(currency, money.Currency);
+            }
         }
     }
 }
