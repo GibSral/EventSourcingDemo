@@ -1,6 +1,6 @@
 # Sample for EventSourcing in .net
 
-## EventStore is prerequisite
+## EventStore with acategory projection active is prerequisite
 * Installation via chocolatey: choco install eventstore-oss
 * Docker: https://hub.docker.com/r/eventstore/eventstore/
 
