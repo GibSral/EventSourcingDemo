@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace BankAccount.CoreDomain.Cqrs
 {
-    public interface IAggregateRoot<TEvent> where TEvent : notnull
+    public interface IAggregateRoot<TAggregate, TEvent> where TAggregate : notnull where TEvent : notnull
     {
-        OId<BankAccount, Guid> Id { get; }
+        OId<TAggregate, Guid> Id { get; }
 
         int Version { get; }
 

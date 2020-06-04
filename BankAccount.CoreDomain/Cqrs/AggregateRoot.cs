@@ -5,29 +5,32 @@ using System.Reflection;
 
 namespace BankAccount.CoreDomain.Cqrs
 {
-    public abstract class AggregateRoot<TEvent> : IAggregateRoot<TEvent> where TEvent : notnull
+    public abstract class AggregateRoot<TAggregate, TEvent> : IAggregateRoot<TAggregate, TEvent> where TAggregate : notnull where TEvent : notnull
     {
         private const string ApplyMethodName = "Apply";
         private readonly Dictionary<Type, ApplyInvocation> applyInvocations = new Dictionary<Type, ApplyInvocation>();
-        private readonly OId<BankAccount, Guid> id;
+        private readonly OId<TAggregate, Guid> id;
         private readonly List<TEvent> uncommittedEvents = new List<TEvent>();
         private int initialVersion;
         private int version;
 
-        protected AggregateRoot(OId<BankAccount, Guid> id)
+        protected AggregateRoot(OId<TAggregate, Guid> id)
         {
             this.id = id;
+            AggregateId = id;
         }
 
-        OId<BankAccount, Guid> IAggregateRoot<TEvent>.Id => id;
+        protected OId<TAggregate, Guid> AggregateId { get; }
 
-        int IAggregateRoot<TEvent>.Version => version;
+        OId<TAggregate, Guid> IAggregateRoot<TAggregate, TEvent>.Id => id;
 
-        int IAggregateRoot<TEvent>.InitialVersion => initialVersion;
+        int IAggregateRoot<TAggregate, TEvent>.Version => version;
 
-        IReadOnlyCollection<TEvent> IAggregateRoot<TEvent>.GetUncommittedEvents() => uncommittedEvents;
+        int IAggregateRoot<TAggregate, TEvent>.InitialVersion => initialVersion;
 
-        void IAggregateRoot<TEvent>.OnEventsCommitted() => uncommittedEvents.Clear();
+        IReadOnlyCollection<TEvent> IAggregateRoot<TAggregate, TEvent>.GetUncommittedEvents() => uncommittedEvents;
+
+        void IAggregateRoot<TAggregate, TEvent>.OnEventsCommitted() => uncommittedEvents.Clear();
 
         protected void RaiseEvent(TEvent @event)
         {

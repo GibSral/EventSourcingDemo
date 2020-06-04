@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using BankAccount.CoreDomain.Cqrs;
 using BankAccount.CoreDomain.DomainValues;
+using BankAccount.CoreDomain.Entities;
 using BankAccount.CoreDomain.Events;
 
 namespace BankAccount.CoreDomain
 {
-    public class BankAccount : AggregateRoot<BankAccountEvent>,
+    public class BankAccount : AggregateRoot<BankAccount, BankAccountEvent>,
         IApply<BankAccountCreated>,
         IApply<BankAccountClosed>,
         IApply<MoneyDeposited>,
@@ -13,17 +16,38 @@ namespace BankAccount.CoreDomain
         IApply<DispoGranted>,
         IApply<GutschriftErhalten>
     {
-        public BankAccount(OId<BankAccount, Guid> id, Iban iban)
+        private Iban? iban;
+
+        private BankAccount(OId<BankAccount, Guid> id)
             : base(id)
         {
-            Iban = iban;
         }
 
-        public Iban Iban { get; }
+        public static BankAccount New(OId<BankAccount, Guid> id, OId<AccountHolder, Guid> accountHolderId, Iban iban, Currency accountCurrency, OId<Employee, Guid> employeeId, TimeStamp timeStamp)
+        {
+            var bankAccount = new BankAccount(id);
+            bankAccount.Create(accountHolderId, iban, accountCurrency, employeeId, timeStamp);
+            return bankAccount;
+        }
+
+        public static BankAccount Rehydrate(OId<BankAccount, Guid> id, IEnumerable<BankAccountEvent> events)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Create(
+            OId<AccountHolder, Guid> accountHolderId,
+            Iban accountIban,
+            Currency accountCurrency,
+            OId<Employee, Guid> employeeId,
+            TimeStamp timeStamp)
+        {
+            RaiseEvent(new BankAccountCreated(AggregateId.Value, accountHolderId.Value, accountIban.Value, accountCurrency.Value, employeeId.Value, timeStamp.Value));
+        }
 
         void IApply<BankAccountCreated>.Apply(BankAccountCreated @event)
         {
-            throw new NotImplementedException();
+            iban = Iban.Of(@event.Iban);
         }
 
         void IApply<BankAccountClosed>.Apply(BankAccountClosed @event)
