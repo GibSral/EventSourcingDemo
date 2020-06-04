@@ -8,7 +8,6 @@
     <Rule Id="CA1009" Action="Warning" />
     <Rule Id="CA1016" Action="Warning" />
     <Rule Id="CA1021" Action="Info" />
-    <Rule Id="CA1033" Action="Warning" />
     <Rule Id="CA1039" Action="Warning" />
     <Rule Id="CA1040" Action="Warning" />
     <Rule Id="CA1041" Action="Warning" />
@@ -200,6 +199,9 @@
     <Rule Id="CA1816" Action="None" />
     <Rule Id="CA2216" Action="None" />
     <Rule Id="CA5379" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.NetCore.CSharp.Analyzers" RuleNamespace="Microsoft.NetCore.CSharp.Analyzers">
+    <Rule Id="CA1824" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.NetFramework.Analyzers" RuleNamespace="Microsoft.NetFramework.Analyzers">
     <Rule Id="CA2237" Action="None" />

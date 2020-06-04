@@ -6,7 +6,6 @@ namespace BankAccount.CoreDomain
 {
     public static class OId
     {
-
         public static OId<TEntity, TId> Of<TEntity, TId>(TId id) where TEntity : notnull => new OId<TEntity, TId>(id);
     }
 

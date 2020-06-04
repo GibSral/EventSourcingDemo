@@ -11,6 +11,7 @@ namespace BankAccount.CoreDomain.Events
         }
 
         public Guid BankAccountId { get; }
+
         public long UnixTimestamp { get; }
 
         public bool Equals(BankAccountEvent? other)

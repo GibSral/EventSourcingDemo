@@ -1,7 +1,12 @@
-﻿namespace BankAccount.CoreDomain.Events
+﻿using System;
+
+namespace BankAccount.CoreDomain.Events
 {
-    public class BankAccountClosed
+    public class BankAccountClosed : BankAccountEvent
     {
-        
+        public BankAccountClosed(Guid bankAccountId, long unixTimestamp)
+            : base(bankAccountId, unixTimestamp)
+        {
+        }
     }
 }

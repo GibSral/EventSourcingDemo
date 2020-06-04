@@ -10,6 +10,7 @@ namespace BankAccount.CoreDomain.DomainValues
         }
 
         public static Currency Euro => new Currency("€");
+
         public static Currency Dollar => new Currency("$");
 
         public bool Equals(Currency? other) => base.Equals(other);
